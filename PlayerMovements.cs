@@ -31,12 +31,19 @@ public class PlayerMovements : MonoBehaviour
     // Pj stats
     public int hp;
 
+    // Shoot variables
+    public GameObject prefab;
+    public float shootVelo;
+    private float shotDir;
+
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
         movement = new Vector2();
         animator = GetComponent<Animator>();
         lookingRight = true;
+
+        shotDir = 1;
     }
 
 
@@ -48,10 +55,12 @@ public class PlayerMovements : MonoBehaviour
         Vector3 rigth = new Vector3(0, 180, 0); 
         if (look < 0 && lookingRight)
         {
+            shotDir = -1;
             transform.Rotate(Vector3.up, 180);
             lookingRight = false;
         }else if (look > 0 && !lookingRight)
         {
+            shotDir = 1;
             transform.Rotate(Vector3.up, 180);
             lookingRight = true;
         }
@@ -61,6 +70,7 @@ public class PlayerMovements : MonoBehaviour
             animator.SetFloat("walking", 1f);
         else
             animator.SetFloat("walking", 0f);
+
         animator.SetFloat("jumping", Mathf.Abs(body.velocity.y));
 
 
@@ -69,6 +79,10 @@ public class PlayerMovements : MonoBehaviour
             transform.position -= Vector3.left * velocity * Time.deltaTime;
         if (Input.GetKey("left"))
             transform.position -= Vector3.right * velocity * Time.deltaTime;
+
+        // Shoot //
+        if (Input.GetKeyDown(KeyCode.X))
+            Shoot();
 
         // Trampolin //
         movement = body.velocity;
@@ -82,8 +96,6 @@ public class PlayerMovements : MonoBehaviour
             movement.y = jump;
         body.velocity = movement;
 
-
-
         ////// DEAD CONDITIONS /////
 
         // FALLING DEAD //
@@ -95,7 +107,14 @@ public class PlayerMovements : MonoBehaviour
 
         if (hp <= 0)
             Destroy(this);
+    }
 
+    void Shoot()
+    {
+        GameObject enemy = Instantiate(prefab, transform.position, transform.rotation) as GameObject;
+        enemy.transform.position = new Vector2(transform.position.x + (0.1f*shotDir), transform.position.y);
+        enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(shootVelo*shotDir, 0);
+        Destroy(enemy, 5);
     }
 
 }
