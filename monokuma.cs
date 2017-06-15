@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class monokuma : MonoBehaviour {
 
-    private float veloFollow = 2.0f;
+    private float veloFollow = 3.0f;
     public Transform player;
     private float x;
     private float y;
