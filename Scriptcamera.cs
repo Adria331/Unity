@@ -5,7 +5,7 @@ using UnityEngine;
 public class Scriptcamera : MonoBehaviour {
 
     public Transform player;
-    public float smoothrate = 0.05f;
+    public float smoothrate = 0.055f;
     private Transform thisTransform;
     private Vector2 velocity;
 	// Use this for initialization
