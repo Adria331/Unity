@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class spawn : MonoBehaviour {
+public class spawn : MonoBehaviour
+{
 
     Mob script;
-    private int seconds = 1;
+    private int seconds = 3;
     private float time = 0;
     public GameObject MobPrefab;
-    public GameObject[] punts = new GameObject[2];
+    public GameObject[] punts = new GameObject[15];
 
     // Use this for initialization
     void Start()
@@ -29,9 +30,9 @@ public class spawn : MonoBehaviour {
 
     void createEnemy()
     {
-        GameObject enemy = Instantiate(MobPrefab, transform.position, transform.rotation) as GameObject;
+        GameObject enemy = Instantiate(MobPrefab, new Vector3(-22.5f, 28f, 8f), transform.rotation) as GameObject;
         enemy.GetComponent<Mob>().punts = this.punts;
         enemy.GetComponent<Mob>().yo = enemy;
-        enemy.GetComponent<Mob>().velo = 1;
+        enemy.GetComponent<Mob>().velo = 0.3f;
     }
 }
